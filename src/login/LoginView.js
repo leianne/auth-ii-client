@@ -1,50 +1,39 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import LoginComponent from './LoginComponent';
 import "./loginStyles.css";
-import FormGroup from "@material-ui/core/FormGroup";
-import TextField from "@material-ui/core/TextField";
-import Button from '@material-ui/core/Button';
 
 class LoginView extends Component {
-  state={
-    username: '',
-    password: ''
-  }
+  state = {
+    username: "",
+    password: "",
+    registering: false
+  };
 
-  handleChange = (e) => {
+  handleChanges = e => {
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value
-    })
+    });
   }
+  
+  handleSubmit = e => {
+    e.preventDefault()
+    if(this.state.registering){
+      this.props.registerUser()
+    } else {
+      this.props.loginUser()
+    }
+  }
+
   render() {
     return (
-      <form className="formContainer">
-        <TextField
-          id="outlined-name"
-          label="Username"
-          name='username'
-          className='formText'
-          value={this.state.username}
-          onChange={this.handleChange}
-          margin="normal"
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-name"
-          label="Password"
-          name='password'
-          className='formText'
-          value={this.state.password}
-          onChange={this.handleChange}
-          margin="normal"
-          variant="outlined"
-        />
-        <Button variant="outlined" color="inherit" className=''>
-        Inherit
-      </Button>
-      </form>
+      <LoginComponent user={this.state} handleSubmit={this.handleSubmit} registering={this.state.registering} handleChanges={this.handleChanges}/>
     );
   }
 }
 
-export default LoginView;
+const mapStateToProps = state => {
+  
+}
+export default connect(mapStateToProps, {loginUser, registerUser})(LoginView);
