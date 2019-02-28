@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import UserView from './views/UserView';
-import LoginView from './views/LoginView';
+import LoginView from './login/LoginView';
 import './App.css';
 
 class App extends Component {
@@ -13,8 +13,8 @@ class App extends Component {
           <NavLink to='/login'>Login</NavLink>
           <NavLink to='register'>Register</NavLink>
         </header>
-        <Route to='/users' component={UserView} />
-        <Route to='/users' component={LoginView} />
+        <Route path='/users' component={UserView} />
+        <Route path='/login' component={LoginView} />
       </>
     );
   }
